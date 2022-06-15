@@ -7,9 +7,7 @@ import "./assets/img/4geeks.ico";
 
 window.onload = function() {
   //write your code here
-  document.querySelector("#dominios").innerHTML = generateList(
-    domainGenerate(pronoun, adjective, noun, extension)
-  );
+  document.querySelector("#dominios").innerHTML = codeHtml;
 };
 
 let pronoun = ["the", "my", "your", "our", "their"];
@@ -23,6 +21,7 @@ let adjective = [
   "generous"
 ];
 let noun = [
+  "reyes",
   "place",
   "lobby",
   "world",
@@ -35,6 +34,7 @@ let noun = [
   "market"
 ];
 let extension = [
+  ".es",
   ".com",
   ".net",
   ".tech",
@@ -42,7 +42,6 @@ let extension = [
   ".es",
   ".tk",
   ".eu",
-  ".es",
   ".us",
   ".gov",
   ".edu"
@@ -61,6 +60,32 @@ const domainGenerate = (arr1, arr2, arr3, arr4) => {
   }
   return names;
 };
+const names = domainGenerate(pronoun, adjective, noun, extension);
+
+const hackExtensions = arr => {
+  let nombreSplit = arr.map(function(item) {
+    return item.split(".");
+  });
+  for (let i = 0; i < nombreSplit.length; i++) {
+    if (
+      nombreSplit[i][1] ==
+      nombreSplit[i][0].slice(
+        nombreSplit[i][0].length - nombreSplit[i][1].length,
+        nombreSplit[i][0].length
+      )
+    ) {
+      nombreSplit[i][0] = nombreSplit[i][0].slice(
+        0,
+        nombreSplit[i][0].length - nombreSplit[i][1].length
+      );
+    }
+  }
+  let newNames = nombreSplit.map(function(item) {
+    return item[0] + "." + item[1];
+  });
+  return newNames;
+};
+const newNames = hackExtensions(names);
 
 const generateList = arr => {
   let codeHtml = "<ul>";
@@ -73,3 +98,4 @@ const generateList = arr => {
   codeHtml += finUl;
   return codeHtml;
 };
+const codeHtml = generateList(newNames); // variable final que va al window.onload

@@ -1,1 +1,9 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
+
+li {
+  list-style-type: none;
+  font-size: 3vw;
+  margin-left: 0px;
+  padding-left: 0px;
+  color: green;
+}
